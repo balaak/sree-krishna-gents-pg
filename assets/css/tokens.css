@@ -1,0 +1,90 @@
+/* ─────────────────────────────────────────────────────────────
+   Sree Krishna Gents PG — Design Tokens (Clay palette)
+   Premium · Homey · Trustworthy
+   Source: Claude Design handoff, confirmed by Bala 2026-05-21
+   ───────────────────────────────────────────────────────────── */
+
+:root {
+  /* ─── PRIMARY PALETTE — Warm Clay ───────────────────────── */
+  --clay-50:  #FBF3EC;
+  --clay-100: #F4E0D0;
+  --clay-200: #E8BFA1;
+  --clay-300: #D89773;
+  --clay-400: #C57650;
+  --clay-500: #B45C3D;   /* primary brand */
+  --clay-600: #9A4A30;
+  --clay-700: #7A3A26;
+  --clay-800: #532619;
+  --clay-900: #2E140D;
+
+  /* ─── CREAM / PAPER ──────────────────────────────────────── */
+  --cream-50:  #FDFAF5;  /* page background */
+  --cream-100: #F8F1E6;
+  --cream-200: #EFE4D2;
+  --cream-300: #E3D2B5;
+
+  /* ─── WALNUT / INK (warm, never pure black) ─────────────── */
+  --walnut-900: #1A120C;
+  --walnut-800: #2B1F18;
+  --walnut-700: #3D2E22;
+  --walnut-600: #5C463A;
+  --walnut-500: #7A6557;
+  --walnut-400: #9C8979;
+  --walnut-300: #BFAE9D;
+  --walnut-200: #DDD0BE;
+  --walnut-100: #ECE2D2;
+
+  /* ─── SAGE — secondary accent (calm, trust) ─────────────── */
+  --sage-100: #E5EBE0;
+  --sage-300: #A8B79A;
+  --sage-500: #6B7F5F;
+  --sage-700: #4A5A41;
+
+  /* ─── SAFFRON — micro accent ("live", "verified") ───────── */
+  --saffron-500: #D78A2E;
+
+  /* ─── SEMANTIC ALIASES ───────────────────────────────────── */
+  --bg:           var(--cream-50);
+  --bg-elev:      #FFFFFF;
+  --bg-deep:      var(--walnut-900);
+
+  --ink:          var(--walnut-900);
+  --ink-2:        var(--walnut-700);
+  --ink-3:        var(--walnut-500);
+  --ink-4:        var(--walnut-400);
+  --ink-inverse:  var(--cream-50);
+  --ink-inverse-2: #C9B59A;
+
+  --brand:        var(--clay-500);
+  --brand-deep:   var(--clay-700);
+  --brand-soft:   var(--clay-100);
+  --brand-tint:   var(--clay-50);
+
+  --line:         #E6D9C5;
+  --line-soft:    #F0E5D2;
+  --line-strong:  #C9B89B;
+
+  /* ─── TYPOGRAPHY ─────────────────────────────────────────── */
+  --font-display: 'Instrument Serif', 'Georgia', serif;
+  --font-body:    'Geist', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+
+  /* ─── SPACING — 4pt grid ─────────────────────────────────── */
+  --s-1: 4px;   --s-2: 8px;   --s-3: 12px;  --s-4: 16px;
+  --s-5: 20px;  --s-6: 24px;  --s-7: 32px;  --s-8: 40px;
+  --s-9: 48px;  --s-10: 64px; --s-11: 80px; --s-12: 96px;
+
+  /* ─── RADIUS ─────────────────────────────────────────────── */
+  --r-sm: 8px; --r-md: 12px; --r-lg: 16px; --r-xl: 24px; --r-pill: 999px;
+
+  /* ─── SHADOWS — warm-tinted, never grey-black ───────────── */
+  --shadow-1: 0 1px 2px rgba(46,20,13,0.04), 0 1px 1px rgba(46,20,13,0.03);
+  --shadow-2: 0 4px 12px rgba(46,20,13,0.06), 0 1px 2px rgba(46,20,13,0.04);
+  --shadow-3: 0 12px 28px rgba(46,20,13,0.10), 0 2px 6px rgba(46,20,13,0.06);
+  --shadow-4: 0 24px 60px rgba(46,20,13,0.18), 0 4px 12px rgba(46,20,13,0.08);
+
+  /* ─── MOTION ─────────────────────────────────────────────── */
+  --ease-out:    cubic-bezier(0.2, 0.7, 0.2, 1);
+  --ease-spring: cubic-bezier(0.34, 1.42, 0.64, 1);
+  --dur-fast:    140ms;
+  --dur-base:    240ms;
+}
