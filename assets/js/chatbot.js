@@ -17,10 +17,11 @@ const FLOWS = {
     ]
   },
   pricing: {
-    msg: "Here's the full pricing breakdown:\n\n• **Daily:** ₹400/day\n• **Monthly:** ₹6,500/month\n• **Security Deposit:** ₹7,500 (refundable)\n• **Electric appliance surcharge:** ₹250/month (iron box, etc.)\n\nFood is not provided — but there are great options nearby.",
+    msg: "Pricing is shared directly by the owner — it depends on room type and stay duration. We also run occasional discounts! 😊\n\nThe fastest way to get the current rate is to ask the owner directly on WhatsApp — he usually replies within minutes.",
     opts: [
-      { label: '🏠 Check Availability', next: 'avail_name' },
-      { label: '⬅️ Back to menu',       next: 'welcome' },
+      { label: '💬 Ask Owner on WhatsApp', action: 'openWhatsAppPricing' },
+      { label: '🏠 Check Availability',    next: 'avail_name' },
+      { label: '⬅️ Back to menu',          next: 'welcome' },
     ]
   },
   location: {
@@ -62,12 +63,24 @@ const FLOWS = {
     storeAs: 'phone'
   },
   avail_type: {
-    msg: "Got it! Just one more — what best describes you?\n\n(This helps us understand your needs better.)",
+    msg: "Got it! What best describes you?\n\n(This helps us suggest the right room.)",
     opts: [
-      { label: '💼 Working Professional', next: 'avail_duration', storeAs: 'type', storeVal: 'Working Professional' },
-      { label: '🎓 Student',             next: 'avail_duration', storeAs: 'type', storeVal: 'Student' },
-      { label: '🧑‍💻 Self-Employed',       next: 'avail_duration', storeAs: 'type', storeVal: 'Self-Employed' },
-      { label: '👤 Other',               next: 'avail_duration', storeAs: 'type', storeVal: 'Other' },
+      { label: '💼 Working Professional', next: 'avail_room', storeAs: 'type', storeVal: 'Working Professional' },
+      { label: '🎓 Student',             next: 'avail_room', storeAs: 'type', storeVal: 'Student' },
+      { label: '🧑‍💻 Self-Employed',       next: 'avail_room', storeAs: 'type', storeVal: 'Self-Employed' },
+      { label: '👤 Other',               next: 'avail_room', storeAs: 'type', storeVal: 'Other' },
+    ]
+  },
+  avail_room: {
+    msg: "Which type of room are you interested in?",
+    opts: [
+      { label: '🌟 Premium Single (AC, TV, WiFi)',    next: 'avail_duration', storeAs: 'room', storeVal: 'Premium Single' },
+      { label: '🌟 Premium Shared — 2 Pax',           next: 'avail_duration', storeAs: 'room', storeVal: 'Premium Shared (2 Pax)' },
+      { label: '🛏️ Budget Single (Attached Bath)',    next: 'avail_duration', storeAs: 'room', storeVal: 'Budget Single' },
+      { label: '🛏️ Budget Shared — 2 Pax',           next: 'avail_duration', storeAs: 'room', storeVal: 'Budget Shared (2 Pax)' },
+      { label: '🛏️ Budget Shared — 3 Pax',           next: 'avail_duration', storeAs: 'room', storeVal: 'Budget Shared (3 Pax)' },
+      { label: '💰 Economy (Common Bath)',            next: 'avail_duration', storeAs: 'room', storeVal: 'Economy (Common Bath)' },
+      { label: '❓ Not sure — help me choose',        next: 'avail_duration', storeAs: 'room', storeVal: 'Not sure' },
     ]
   },
   avail_duration: {
@@ -89,7 +102,7 @@ const FLOWS = {
 };
 
 // ── State ──────────────────────────────────────────────────────
-const state = { name: '', phone: '', type: '', duration: '', step: 'welcome', awaitingInput: false, inputStoreAs: '', inputNext: '' };
+const state = { name: '', phone: '', type: '', room: '', duration: '', step: 'welcome', awaitingInput: false, inputStoreAs: '', inputNext: '' };
 
 // ── DOM refs ───────────────────────────────────────────────────
 const bubble   = document.getElementById('chatBubble');
@@ -172,7 +185,8 @@ function handleOpt(opt) {
 
   if (opt.storeAs && opt.storeVal) state[opt.storeAs] = opt.storeVal;
 
-  if (opt.action === 'openWhatsApp') { openWhatsApp(); return; }
+  if (opt.action === 'openWhatsApp')        { openWhatsApp(); return; }
+  if (opt.action === 'openWhatsAppPricing') { openWhatsAppPricing(); return; }
   if (opt.action === 'openCall')     { window.location.href = 'tel:+' + OWNER_PHONE; return; }
   if (opt.url) { window.open(opt.url, '_blank', 'noopener'); }
 
@@ -194,18 +208,28 @@ inputEl.addEventListener('keydown', e => { if (e.key === 'Enter') handleInput();
 
 // ── WhatsApp pre-fill ──────────────────────────────────────────
 function openWhatsApp() {
-  const msg = `Hi! I'm interested in Sree Krishna Gents PG.
-
-Name: ${state.name}
-Mobile: ${state.phone}
-I am a: ${state.type}
-Stay duration: ${state.duration}
-
-Can you confirm availability?`;
-  const url = `https://wa.me/${OWNER_PHONE}?text=${encodeURIComponent(msg)}`;
-  window.open(url, '_blank', 'noopener');
+  const lines = [
+    `Hi! I'm interested in Sree Krishna Gents PG.`,
+    ``,
+    `Name: ${state.name}`,
+    `Mobile: ${state.phone}`,
+    `I am a: ${state.type}`,
+    state.room     ? `Room type: ${state.room}` : null,
+    `Stay duration: ${state.duration}`,
+    ``,
+    `Can you confirm availability and share the current rate?`
+  ].filter(Boolean).join('\n');
+  window.open(`https://wa.me/${OWNER_PHONE}?text=${encodeURIComponent(lines)}`, '_blank', 'noopener');
   setTimeout(() => {
-    addMsg("✅ WhatsApp opened with your details pre-filled! The owner will confirm availability shortly. You can also call directly: 094471 05351", 'bot');
+    addMsg("✅ WhatsApp opened with your details pre-filled! The owner will confirm availability and share pricing shortly.\n\nYou can also call directly: 094471 05351", 'bot');
+  }, 400);
+}
+
+function openWhatsAppPricing() {
+  const msg = `Hi! I'd like to know the current rates at Sree Krishna Gents PG. Can you share the pricing for the available rooms?`;
+  window.open(`https://wa.me/${OWNER_PHONE}?text=${encodeURIComponent(msg)}`, '_blank', 'noopener');
+  setTimeout(() => {
+    addMsg("✅ WhatsApp opened! The owner will share the current rates with you directly.", 'bot');
   }, 400);
 }
 

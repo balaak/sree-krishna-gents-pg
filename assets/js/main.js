@@ -13,6 +13,7 @@ if (form) {
     const name     = document.getElementById('f-name').value.trim();
     const phone    = document.getElementById('f-phone').value.trim();
     const type     = document.getElementById('f-type').value;
+    const room     = document.getElementById('f-room').value;
     const duration = document.getElementById('f-duration').value;
     const checkin  = document.getElementById('f-checkin').value;
     const msg      = document.getElementById('f-msg').value.trim();
@@ -36,17 +37,28 @@ if (form) {
       custom: 'Not sure yet'
     }[duration] || duration || 'Not specified';
 
+    const roomLabel = {
+      'premium-single': 'Premium Single (AC, TV, WiFi)',
+      'premium-shared': 'Premium Shared — 2 Pax (AC, TV, WiFi)',
+      'budget-single':  'Budget Single (Attached Bath)',
+      'budget-2pax':    'Budget Shared — 2 Pax (Attached Bath)',
+      'budget-3pax':    'Budget Shared — 3 Pax (Attached Bath)',
+      'economy':        'Economy (Common Bath)',
+      'unsure':         'Not sure yet'
+    }[room] || null;
+
     const lines = [
       `Hi! I'd like to check availability at Sree Krishna Gents PG.`,
       ``,
       `Name: ${name}`,
       `Mobile: ${phone}`,
       `I am a: ${typeLabel}`,
+      roomLabel ? `Room type: ${roomLabel}` : null,
       `Stay duration: ${durationLabel}`,
       checkin ? `Preferred check-in: ${checkin}` : null,
       msg     ? `Notes: ${msg}` : null,
       ``,
-      `Can you confirm availability?`
+      `Can you confirm availability and share the current rate?`
     ].filter(l => l !== null).join('\n');
 
     window.open(`https://wa.me/${OWNER_PHONE}?text=${encodeURIComponent(lines)}`, '_blank', 'noopener');
