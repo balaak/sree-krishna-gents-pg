@@ -1,9 +1,8 @@
 /* ============================================================
    SKGPG AI Chatbot — Phase 1 (rule-based, no backend)
    Phase 3 upgrade: swap sendBotMessage() for Claude Haiku API call
+   Phone + WhatsApp message builder live in shared.js (window.SKGPG).
    ============================================================ */
-
-const OWNER_PHONE = '919447105351';
 
 const FLOWS = {
   welcome: {
@@ -187,7 +186,7 @@ function handleOpt(opt) {
 
   if (opt.action === 'openWhatsApp')        { openWhatsApp(); return; }
   if (opt.action === 'openWhatsAppPricing') { openWhatsAppPricing(); return; }
-  if (opt.action === 'openCall')     { window.location.href = 'tel:+' + OWNER_PHONE; return; }
+  if (opt.action === 'openCall')     { window.location.href = 'tel:+' + SKGPG.OWNER_PHONE; return; }
   if (opt.url) { window.open(opt.url, '_blank', 'noopener'); }
 
   if (opt.next) setTimeout(() => startFlow(opt.next), 300);
@@ -208,18 +207,14 @@ inputEl.addEventListener('keydown', e => { if (e.key === 'Enter') handleInput();
 
 // ── WhatsApp pre-fill ──────────────────────────────────────────
 function openWhatsApp() {
-  const lines = [
-    `Hi! I'm interested in Sree Krishna Gents PG.`,
-    ``,
-    `Name: ${state.name}`,
-    `Mobile: ${state.phone}`,
-    `I am a: ${state.type}`,
-    state.room     ? `Room type: ${state.room}` : null,
-    `Stay duration: ${state.duration}`,
-    ``,
-    `Can you confirm availability and share the current rate?`
-  ].filter(Boolean).join('\n');
-  window.open(`https://wa.me/${OWNER_PHONE}?text=${encodeURIComponent(lines)}`, '_blank', 'noopener');
+  const text = SKGPG.buildAvailabilityMessage({
+    name:     state.name,
+    phone:    state.phone,
+    type:     state.type,
+    room:     state.room,
+    duration: state.duration
+  });
+  SKGPG.openWhatsApp(text);
   setTimeout(() => {
     addMsg("✅ WhatsApp opened with your details pre-filled! The owner will confirm availability and share pricing shortly.\n\nYou can also call directly: 094471 05351", 'bot');
   }, 400);
@@ -227,7 +222,7 @@ function openWhatsApp() {
 
 function openWhatsAppPricing() {
   const msg = `Hi! I'd like to know the current rates at Sree Krishna Gents PG. Can you share the pricing for the available rooms?`;
-  window.open(`https://wa.me/${OWNER_PHONE}?text=${encodeURIComponent(msg)}`, '_blank', 'noopener');
+  SKGPG.openWhatsApp(msg);
   setTimeout(() => {
     addMsg("✅ WhatsApp opened! The owner will share the current rates with you directly.", 'bot');
   }, 400);
