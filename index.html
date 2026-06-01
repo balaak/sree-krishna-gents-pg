@@ -21,9 +21,9 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
 
-<link rel="stylesheet" href="assets/css/tokens.css" />
-<link rel="stylesheet" href="assets/css/site.css" />
-<link rel="stylesheet" href="assets/css/main.css" />
+<link rel="stylesheet" href="assets/css/tokens.css?v=4" />
+<link rel="stylesheet" href="assets/css/site.css?v=4" />
+<link rel="stylesheet" href="assets/css/main.css?v=4" />
 
 <!-- Favicon (inline SVG) -->
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%23B45C3D'/><text x='16' y='22' text-anchor='middle' font-size='18' fill='%23FDFAF5' font-family='Georgia,serif' font-style='italic'>S</text></svg>" />
@@ -53,10 +53,38 @@
       <a class="btn btn-ghost" href="tel:+919447105351" aria-label="Call owner">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.37 1.9.72 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.35 1.85.59 2.81.72A2 2 0 0 1 22 16.92z"/></svg>
       </a>
-      <a class="btn btn-primary btn-sm" href="#book">Check availability <span class="arrow">→</span></a>
+      <button class="nav-burger" id="navBurger" aria-label="Open menu" aria-expanded="false" aria-controls="navDrawer">
+        <span class="nav-burger-box" aria-hidden="true"><span></span><span></span><span></span></span>
+      </button>
     </div>
   </div>
 </header>
+
+<!-- ─────────────────────────────────────────────────────────
+     MOBILE NAV DRAWER (slide-in from right, < 960px)
+     ───────────────────────────────────────────────────────── -->
+<div class="nav-overlay" id="navOverlay" hidden></div>
+<aside class="nav-drawer" id="navDrawer" role="dialog" aria-modal="true" aria-label="Menu" aria-hidden="true" hidden>
+  <div class="nav-drawer-head">
+    <span class="nav-drawer-title">Menu</span>
+    <button class="nav-drawer-close" id="navDrawerClose" aria-label="Close menu">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg>
+    </button>
+  </div>
+  <nav class="nav-drawer-links" aria-label="Mobile primary">
+    <a href="#rooms">Rooms</a>
+    <a href="#amenities">Amenities</a>
+    <a href="#day">A day here</a>
+    <a href="#location">Location</a>
+    <a href="#faq">FAQ</a>
+  </nav>
+  <div class="nav-drawer-foot">
+    <a class="btn btn-secondary" href="tel:+919447105351">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.37 1.9.72 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.35 1.85.59 2.81.72A2 2 0 0 1 22 16.92z"/></svg>
+      Call 094471 05351
+    </a>
+  </div>
+</aside>
 
 <main id="top">
 
@@ -204,9 +232,16 @@
       </p>
     </div>
 
+    <div class="rooms-tabs" role="tablist" aria-label="Filter rooms by category">
+      <button type="button" class="room-tab is-active" role="tab" aria-selected="true" data-filter="all">All</button>
+      <button type="button" class="room-tab" role="tab" aria-selected="false" data-filter="premium">Premium</button>
+      <button type="button" class="room-tab" role="tab" aria-selected="false" data-filter="budget">Budget</button>
+      <button type="button" class="room-tab" role="tab" aria-selected="false" data-filter="economy">Economy</button>
+    </div>
+
     <div class="rooms-grid" data-reveal-stagger>
 
-      <article class="room">
+      <article class="room" data-category="premium">
         <div class="photo r1" data-label="Premium Single room"></div>
         <div class="body">
           <span class="tag"><span class="dot"></span>Premium</span>
@@ -217,11 +252,11 @@
             <li>Attached bathroom</li>
             <li>Best for long-term professionals</li>
           </ul>
-          <a class="btn btn-dark book" href="#book">Enquire &amp; check rate <span class="arrow">→</span></a>
+          <button type="button" class="btn btn-dark book" data-room="Premium Single">Enquire &amp; check rate <span class="arrow">→</span></button>
         </div>
       </article>
 
-      <article class="room">
+      <article class="room" data-category="premium">
         <div class="photo r2" data-label="Premium Shared room"></div>
         <div class="body">
           <span class="tag"><span class="dot"></span>Premium</span>
@@ -232,11 +267,11 @@
             <li>Attached bathroom</li>
             <li>Popular with working professionals</li>
           </ul>
-          <a class="btn btn-dark book" href="#book">Enquire &amp; check rate <span class="arrow">→</span></a>
+          <button type="button" class="btn btn-dark book" data-room="Premium Shared — 2 Pax">Enquire &amp; check rate <span class="arrow">→</span></button>
         </div>
       </article>
 
-      <article class="room">
+      <article class="room" data-category="budget">
         <div class="photo r3" data-label="Budget Single room"></div>
         <div class="body">
           <span class="tag"><span class="dot"></span>Budget</span>
@@ -247,11 +282,11 @@
             <li>Good value for solo residents</li>
             <li>Wi-Fi included</li>
           </ul>
-          <a class="btn btn-dark book" href="#book">Enquire &amp; check rate <span class="arrow">→</span></a>
+          <button type="button" class="btn btn-dark book" data-room="Budget Single">Enquire &amp; check rate <span class="arrow">→</span></button>
         </div>
       </article>
 
-      <article class="room">
+      <article class="room" data-category="budget">
         <div class="photo r1" data-label="Budget Shared 2-pax room"></div>
         <div class="body">
           <span class="tag"><span class="dot"></span>Budget</span>
@@ -262,11 +297,11 @@
             <li>Most popular category</li>
             <li>Wi-Fi included</li>
           </ul>
-          <a class="btn btn-dark book" href="#book">Enquire &amp; check rate <span class="arrow">→</span></a>
+          <button type="button" class="btn btn-dark book" data-room="Budget Shared — 2 Pax">Enquire &amp; check rate <span class="arrow">→</span></button>
         </div>
       </article>
 
-      <article class="room">
+      <article class="room" data-category="budget">
         <div class="photo r2" data-label="Budget Shared 3-pax room"></div>
         <div class="body">
           <span class="tag"><span class="dot"></span>Budget</span>
@@ -277,11 +312,11 @@
             <li>Individual storage lockers</li>
             <li>Wi-Fi included</li>
           </ul>
-          <a class="btn btn-dark book" href="#book">Enquire &amp; check rate <span class="arrow">→</span></a>
+          <button type="button" class="btn btn-dark book" data-room="Budget Shared — 3 Pax">Enquire &amp; check rate <span class="arrow">→</span></button>
         </div>
       </article>
 
-      <article class="room">
+      <article class="room" data-category="economy">
         <div class="photo r3" data-label="Economy room"></div>
         <div class="body">
           <span class="tag"><span class="dot"></span>Economy</span>
@@ -292,7 +327,7 @@
             <li>Most affordable option</li>
             <li>Wi-Fi included</li>
           </ul>
-          <a class="btn btn-dark book" href="#book">Enquire &amp; check rate <span class="arrow">→</span></a>
+          <button type="button" class="btn btn-dark book" data-room="Economy">Enquire &amp; check rate <span class="arrow">→</span></button>
         </div>
       </article>
 
@@ -739,9 +774,70 @@
      STICKY MOBILE CTA
      ───────────────────────────────────────────────────────── -->
 <div class="mobile-cta" id="mobileCta" role="region" aria-label="Quick contact">
-  <a class="btn btn-call" href="tel:+919447105351">📞 Call</a>
-  <a class="btn btn-whatsapp" href="https://wa.me/919447105351?text=Hi%2C%20I%27d%20like%20to%20check%20availability%20at%20Sree%20Krishna%20Gents%20PG." target="_blank" rel="noopener">💬 WhatsApp</a>
-  <a class="btn btn-primary" href="#book">Check availability</a>
+  <button class="btn btn-primary btn-lg sticky-cta-btn" id="stickyCheckBtn" type="button">Check Availability</button>
+</div>
+
+<!-- ─────────────────────────────────────────────────────────
+     AVAILABILITY BOTTOM SHEET (mobile lead path)
+     ───────────────────────────────────────────────────────── -->
+<div class="sheet-overlay" id="sheetOverlay" hidden></div>
+<div class="sheet" id="availSheet" role="dialog" aria-modal="true" aria-label="Check availability" aria-hidden="true" hidden>
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <button class="sheet-close" id="sheetClose" type="button" aria-label="Close">✕</button>
+
+  <div class="sheet-progress" id="sheetProgress" aria-hidden="true">
+    <span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span>
+  </div>
+
+  <div class="sheet-body">
+
+    <!-- Step 1: room type -->
+    <div class="sheet-step" data-step="1">
+      <h3 class="sheet-q">Which room are you after?</h3>
+      <p class="sheet-hint">Tap one — you can sort details with the owner.</p>
+      <div class="chip-grid">
+        <button class="chip" type="button" data-field="room" data-val="Single room">🛏️ Single</button>
+        <button class="chip" type="button" data-field="room" data-val="Shared room (2 pax)">👥 Shared</button>
+        <button class="chip" type="button" data-field="room" data-val="Budget room">💰 Budget</button>
+        <button class="chip" type="button" data-field="room" data-val="Not sure">❓ Not sure</button>
+      </div>
+    </div>
+
+    <!-- Step 2: who -->
+    <div class="sheet-step" data-step="2" hidden>
+      <h3 class="sheet-q">Who's it for?</h3>
+      <p class="sheet-hint">Helps the owner suggest the right fit.</p>
+      <div class="chip-grid">
+        <button class="chip" type="button" data-field="type" data-val="Working Professional">💼 Professional</button>
+        <button class="chip" type="button" data-field="type" data-val="Student">🎓 Student</button>
+        <button class="chip" type="button" data-field="type" data-val="Other">👤 Other</button>
+      </div>
+    </div>
+
+    <!-- Step 3: stay -->
+    <div class="sheet-step" data-step="3" hidden>
+      <h3 class="sheet-q">How long is the stay?</h3>
+      <div class="chip-grid">
+        <button class="chip" type="button" data-field="duration" data-val="Monthly">📆 Monthly</button>
+        <button class="chip" type="button" data-field="duration" data-val="Long-term (6m+)">🗓️ Long-term</button>
+        <button class="chip" type="button" data-field="duration" data-val="Short stay">📅 Short stay</button>
+      </div>
+    </div>
+
+    <!-- Step 4: contact -->
+    <div class="sheet-step" data-step="4" hidden>
+      <h3 class="sheet-q">Last bit — how do we reach you?</h3>
+      <div class="sheet-fields">
+        <input class="sheet-input" id="sheet-name" type="text" placeholder="Your name" autocomplete="name" />
+        <input class="sheet-input" id="sheet-phone" type="tel" placeholder="Mobile number" autocomplete="tel" inputmode="numeric" />
+        <p class="sheet-err" id="sheetErr" hidden>Please add your name and mobile number.</p>
+      </div>
+      <button class="btn btn-whatsapp btn-lg sheet-send" id="sheetSend" type="button">💬 Send on WhatsApp</button>
+      <a class="sheet-call" href="tel:+919447105351">Prefer to call? <strong>094471 05351</strong></a>
+    </div>
+
+  </div>
+  <button class="sheet-back" id="sheetBack" type="button" hidden>← Back</button>
 </div>
 
 <!-- ─────────────────────────────────────────────────────────
@@ -774,8 +870,12 @@
 <!-- ─────────────────────────────────────────────────────────
      SCRIPTS
      ───────────────────────────────────────────────────────── -->
-<script src="assets/js/chatbot.js?v=3"></script>
-<script src="assets/js/main.js?v=3"></script>
+<script src="assets/js/shared.js?v=4"></script>
+<script src="assets/js/chatbot.js?v=4"></script>
+<script src="assets/js/main.js?v=4"></script>
+<script src="assets/js/sheet.js?v=4"></script>
+<script src="assets/js/drawer.js?v=4"></script>
+<script src="assets/js/rooms.js?v=4"></script>
 
 <script>
   // 1. Header shadow on scroll
